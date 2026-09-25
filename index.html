@@ -1,0 +1,2378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="A little question for someone special."
+    >
+
+    <title>A Little Question</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Manrope", sans-serif;
+            background:
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(255, 225, 230, 0.8),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 85% 85%,
+                    rgba(238, 215, 224, 0.7),
+                    transparent 30%
+                ),
+                #f8f4ef;
+
+            color: #292326;
+            overflow-x: hidden;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .page {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+
+        .app {
+            width: 100%;
+            max-width: 720px;
+            position: relative;
+        }
+
+        /* =====================================================
+           SCREEN
+        ===================================================== */
+
+        .screen {
+            display: none;
+            animation: screenIn 0.45s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes screenIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =====================================================
+           MAIN CARD
+        ===================================================== */
+
+        .card {
+            position: relative;
+            background: rgba(255, 253, 250, 0.94);
+            border: 1px solid rgba(67, 42, 49, 0.08);
+            border-radius: 32px;
+            padding: 42px 28px;
+            box-shadow:
+                0 30px 80px rgba(55, 30, 39, 0.10),
+                0 8px 24px rgba(55, 30, 39, 0.05);
+
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: rgba(215, 157, 171, 0.10);
+            top: -90px;
+            right: -60px;
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(120, 71, 88, 0.05);
+            bottom: -70px;
+            left: -50px;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* =====================================================
+           SMALL LABEL
+        ===================================================== */
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+
+            color: #8d5b6d;
+            margin-bottom: 20px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 22px;
+            height: 1px;
+            background: #c692a3;
+        }
+
+        /* =====================================================
+           HEADINGS
+        ===================================================== */
+
+        h1,
+        h2 {
+            font-family: "DM Serif Display", serif;
+            font-weight: 400;
+            line-height: 1.05;
+            color: #38242c;
+        }
+
+        h1 {
+            font-size: clamp(48px, 12vw, 78px);
+            letter-spacing: -0.035em;
+            max-width: 600px;
+        }
+
+        h2 {
+            font-size: clamp(42px, 10vw, 64px);
+            letter-spacing: -0.03em;
+        }
+
+        .italic {
+            font-style: italic;
+            color: #9a5e72;
+        }
+
+        .lead {
+            margin-top: 22px;
+            max-width: 540px;
+
+            font-size: 16px;
+            line-height: 1.8;
+            color: #71676b;
+        }
+
+        /* =====================================================
+           DECORATION
+        ===================================================== */
+
+        .heart-mark {
+            width: 54px;
+            height: 54px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 26px;
+
+            border-radius: 50%;
+            background: #f2dce2;
+            color: #8d4e65;
+
+            font-size: 22px;
+
+            box-shadow:
+                0 10px 25px rgba(141, 78, 101, 0.10);
+        }
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .actions {
+            margin-top: 34px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            width: 100%;
+            min-height: 56px;
+
+            border: 0;
+            border-radius: 16px;
+
+            padding: 15px 20px;
+
+            font-weight: 700;
+            font-size: 14px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: #4d2937;
+            color: white;
+
+            box-shadow:
+                0 12px 24px rgba(77, 41, 55, 0.18);
+        }
+
+        .btn-primary:hover {
+            background: #5c3142;
+        }
+
+        .btn-soft {
+            background: #f1e3e7;
+            color: #613746;
+        }
+
+        .btn-soft:hover {
+            background: #ead6dc;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #d9c7cd;
+            color: #633c4a;
+        }
+
+        .btn-outline:hover {
+            background: #faf3f5;
+        }
+
+        .btn-danger {
+            background: transparent;
+            border: 1px solid #d8c4ca;
+            color: #78505c;
+        }
+
+        /* =====================================================
+           QUESTION
+        ===================================================== */
+
+        .question-card {
+            text-align: center;
+        }
+
+        .question-card .heart-mark {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .question-card .lead {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .question-actions {
+            position: relative;
+
+            min-height: 160px;
+
+            margin-top: 30px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            gap: 12px;
+        }
+
+        .yes-btn {
+            position: relative;
+            z-index: 5;
+        }
+
+        .no-btn {
+            position: relative;
+            z-index: 4;
+        }
+
+        .decline-link {
+            display: inline-block;
+
+            margin-top: 12px;
+
+            border: 0;
+            background: transparent;
+
+            color: #8c777e;
+            font-size: 12px;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+
+            cursor: pointer;
+        }
+
+        .decline-link:hover {
+            color: #5f424d;
+        }
+
+        .no-message {
+            min-height: 22px;
+            margin-top: 8px;
+
+            color: #8e5d6c;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-card {
+            padding-bottom: 34px;
+        }
+
+        .form-intro {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-top: 24px;
+        }
+
+        label.group-title,
+        .group-title {
+            display: block;
+
+            margin-bottom: 10px;
+
+            font-size: 14px;
+            font-weight: 700;
+            color: #443139;
+        }
+
+        .required {
+            color: #a45b70;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+
+            border: 1px solid #dfd1d5;
+            border-radius: 14px;
+
+            background: #fffdfa;
+            color: #33272d;
+
+            padding: 15px 16px;
+
+            outline: none;
+
+            transition:
+                border 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            border-color: #ad7284;
+
+            box-shadow:
+                0 0 0 4px rgba(173, 114, 132, 0.10);
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .date-hint {
+            margin-top: 8px;
+
+            font-size: 12px;
+            color: #8b7c82;
+        }
+
+        .error {
+            display: none;
+
+            margin-top: 7px;
+
+            color: #a3475e;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        /* =====================================================
+           RADIO / CHECKBOX
+        ===================================================== */
+
+        .choice-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .choice {
+            position: relative;
+        }
+
+        .choice input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .choice label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            min-height: 52px;
+
+            padding: 13px 14px;
+
+            border: 1px solid #e1d5d8;
+            border-radius: 14px;
+
+            background: #fffdfa;
+
+            color: #5c4b51;
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                border 0.2s ease,
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .choice label:hover {
+            transform: translateY(-1px);
+            background: #fdf8f9;
+        }
+
+        .choice input:checked + label {
+            border-color: #a96b7d;
+            background: #f7e9ed;
+            color: #613746;
+        }
+
+        .choice-indicator {
+            width: 18px;
+            height: 18px;
+
+            flex: 0 0 18px;
+
+            border: 1.5px solid #cdbbc2;
+            border-radius: 50%;
+        }
+
+        .choice input[type="checkbox"] + label .choice-indicator {
+            border-radius: 5px;
+        }
+
+        .choice input:checked + label .choice-indicator {
+            border-color: #92556a;
+            background: #92556a;
+
+            box-shadow:
+                inset 0 0 0 4px #f7e9ed;
+        }
+
+        /* =====================================================
+           NOTE
+        ===================================================== */
+
+        .note {
+            margin-top: 26px;
+
+            padding: 16px;
+
+            border-left: 3px solid #c38b9c;
+            border-radius: 0 12px 12px 0;
+
+            background: #faf0f3;
+
+            color: #6f5961;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           SUCCESS
+        ===================================================== */
+
+        .success-card {
+            text-align: center;
+        }
+
+        .success-card .heart-mark {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .success-card .lead {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .small-message {
+            margin-top: 25px;
+
+            font-size: 12px;
+            line-height: 1.7;
+
+            color: #8b777e;
+        }
+
+        .ps-box {
+            display: none;
+
+            margin-top: 20px;
+
+            padding: 18px;
+
+            border-radius: 16px;
+
+            background: #f6e8ec;
+            color: #694552;
+
+            font-size: 13px;
+            line-height: 1.7;
+
+            text-align: left;
+        }
+
+        .ps-box.show {
+            display: block;
+            animation: screenIn 0.3s ease;
+        }
+
+        /* =====================================================
+           DECLINE
+        ===================================================== */
+
+        .decline-card {
+            text-align: center;
+        }
+
+        .decline-card .heart-mark {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .decline-card .lead {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+            margin-top: 18px;
+
+            text-align: center;
+
+            color: #a39499;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+        }
+
+        /* =====================================================
+           FOCUS
+        ===================================================== */
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        label:focus-visible {
+            outline: 3px solid rgba(151, 90, 110, 0.25);
+            outline-offset: 3px;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .page {
+                padding: 14px;
+                align-items: flex-start;
+                padding-top: 18px;
+            }
+
+            .card {
+                padding: 32px 20px;
+                border-radius: 25px;
+            }
+
+            h1 {
+                font-size: 50px;
+            }
+
+            h2 {
+                font-size: 44px;
+            }
+
+            .lead {
+                font-size: 15px;
+                line-height: 1.75;
+            }
+
+            .question-actions {
+                min-height: 175px;
+            }
+
+            .btn {
+                min-height: 55px;
+            }
+        }
+
+        /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <main class="app">
+
+        <!-- =================================================
+             SCREEN 1
+        ================================================= -->
+
+        <section
+            class="screen active"
+            id="screen-1"
+            aria-labelledby="intro-title"
+        >
+
+            <div class="card">
+
+                <div class="content">
+
+                    <div class="heart-mark">
+                        ♡
+                    </div>
+
+                    <div class="eyebrow">
+                        Just a little something
+                    </div>
+
+                    <h1 id="intro-title">
+                        Hey,<br>
+                        <span class="italic">you.</span>
+                    </h1>
+
+                    <p class="lead">
+                        I made something small for you.
+                        Nothing complicated. Just give me
+                        a minute and see where this goes.
+                    </p>
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            id="start-btn"
+                        >
+                            Okay, show me
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="footer">
+                Made with a little thought.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SCREEN 2
+        ================================================= -->
+
+        <section
+            class="screen"
+            id="screen-2"
+            aria-labelledby="before-title"
+        >
+
+            <div class="card">
+
+                <div class="content">
+
+                    <div class="heart-mark">
+                        ✦
+                    </div>
+
+                    <div class="eyebrow">
+                        Before I ask
+                    </div>
+
+                    <h2 id="before-title">
+                        One honest<br>
+                        <span class="italic">thought.</span>
+                    </h2>
+
+                    <p class="lead">
+                        I really enjoy having you around.
+                        Talking with you, laughing with you,
+                        and simply spending time together
+                        has become something I genuinely
+                        appreciate.
+                    </p>
+
+                    <p class="lead">
+                        So I thought I should stop keeping
+                        one little question to myself.
+                    </p>
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            id="question-btn"
+                        >
+                            There's something I want to ask
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SCREEN 3 — QUESTION
+        ================================================= -->
+
+        <section
+            class="screen"
+            id="screen-3"
+            aria-labelledby="question-title"
+        >
+
+            <div class="card question-card">
+
+                <div class="content">
+
+                    <div class="heart-mark">
+                        ♡
+                    </div>
+
+                    <div class="eyebrow">
+                        The question
+                    </div>
+
+                    <h2 id="question-title">
+                        Would you go on<br>
+                        a <span class="italic">date</span> with me?
+                    </h2>
+
+                    <p class="lead">
+                        Just the two of us. Good food,
+                        a nice place, and no pressure.
+                    </p>
+
+                    <div class="question-actions">
+
+                        <button
+                            class="btn btn-primary yes-btn"
+                            type="button"
+                            id="yes-btn"
+                        >
+                            Yes, I'd love that
+                        </button>
+
+                        <button
+                            class="btn btn-outline no-btn"
+                            type="button"
+                            id="no-btn"
+                        >
+                            No
+                        </button>
+
+                    </div>
+
+                    <div
+                        class="no-message"
+                        id="no-message"
+                        aria-live="polite"
+                    ></div>
+
+                    <button
+                        class="decline-link"
+                        type="button"
+                        id="honest-no-btn"
+                    >
+                        I'd rather say no
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SCREEN 4 — YES
+        ================================================= -->
+
+        <section
+            class="screen"
+            id="screen-4"
+            aria-labelledby="yes-title"
+        >
+
+            <div class="card">
+
+                <div class="content">
+
+                    <div class="heart-mark">
+                        ♥
+                    </div>
+
+                    <div class="eyebrow">
+                        Well then...
+                    </div>
+
+                    <h2 id="yes-title">
+                        That's a<br>
+                        <span class="italic">yes.</span>
+                    </h2>
+
+                    <p class="lead">
+                        I was hoping you'd say that.
+                        Now let's make sure the evening
+                        is actually worth remembering.
+                    </p>
+
+                    <p class="lead">
+                        I have one last little thing
+                        for you.
+                    </p>
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            id="plan-btn"
+                        >
+                            Let's plan the evening
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SCREEN 5 — FORM
+        ================================================= -->
+
+        <section
+            class="screen"
+            id="screen-5"
+            aria-labelledby="plan-title"
+        >
+
+            <div class="card form-card">
+
+                <div class="content">
+
+                    <div class="form-intro">
+
+                        <div class="heart-mark">
+                            ✦
+                        </div>
+
+                        <div class="eyebrow">
+                            Make it yours
+                        </div>
+
+                        <h2 id="plan-title">
+                            Let's plan<br>
+                            the <span class="italic">evening.</span>
+                        </h2>
+
+                        <p class="lead">
+                            Tell me what sounds good to you.
+                            I'll take care of the rest.
+                        </p>
+
+                    </div>
+
+
+                    <!-- NAME -->
+
+                    <div
+                        class="form-group"
+                        id="name-group"
+                    >
+
+                        <label
+                            class="group-title"
+                            for="name"
+                        >
+                            What should I call you?
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            autocomplete="name"
+                            placeholder="Your name"
+                            required
+                        >
+
+                        <p
+                            class="error"
+                            id="name-error"
+                        >
+                            Please enter your name.
+                        </p>
+
+                    </div>
+
+
+                    <!-- DATE -->
+
+                    <div
+                        class="form-group"
+                        id="date-group"
+                    >
+
+                        <label
+                            class="group-title"
+                            for="date"
+                        >
+                            Which evening works for you?
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="date"
+                            name="date"
+                            type="date"
+                            min="2026-10-07"
+                            max="2026-10-09"
+                            required
+                        >
+
+                        <p class="date-hint">
+                            Available dates:
+                            October 7, 8, or 9, 2026.
+                        </p>
+
+                        <p
+                            class="error"
+                            id="date-error"
+                        >
+                            Please choose October 7, 8, or 9, 2026.
+                        </p>
+
+                    </div>
+
+
+                    <!-- TIME -->
+
+                    <div
+                        class="form-group"
+                        id="time-group"
+                    >
+
+                        <span class="group-title">
+                            What time sounds good?
+                            <span class="required">*</span>
+                        </span>
+
+                        <div class="choice-grid">
+
+                            <div class="choice">
+                                <input
+                                    type="radio"
+                                    name="startTime"
+                                    id="time-5"
+                                    value="5:00 PM"
+                                >
+
+                                <label for="time-5">
+                                    <span class="choice-indicator"></span>
+                                    5:00 PM
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="radio"
+                                    name="startTime"
+                                    id="time-530"
+                                    value="5:30 PM"
+                                >
+
+                                <label for="time-530">
+                                    <span class="choice-indicator"></span>
+                                    5:30 PM
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="radio"
+                                    name="startTime"
+                                    id="time-6"
+                                    value="6:00 PM"
+                                >
+
+                                <label for="time-6">
+                                    <span class="choice-indicator"></span>
+                                    6:00 PM
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="radio"
+                                    name="startTime"
+                                    id="time-630"
+                                    value="6:30 PM"
+                                >
+
+                                <label for="time-630">
+                                    <span class="choice-indicator"></span>
+                                    6:30 PM
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="radio"
+                                    name="startTime"
+                                    id="time-other"
+                                    value="Something else"
+                                >
+
+                                <label for="time-other">
+                                    <span class="choice-indicator"></span>
+                                    Something else
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <p
+                            class="error"
+                            id="time-error"
+                        >
+                            Please choose a time.
+                        </p>
+
+                    </div>
+
+
+                    <!-- DURATION -->
+
+                    <div
+                        class="form-group"
+                        id="duration-group"
+                    >
+
+                        <span class="group-title">
+                            How long should we keep the evening going?
+                            <span class="required">*</span>
+                        </span>
+
+                        <div class="choice-grid">
+
+                            <div class="choice">
+                                <input
+                                    type="radio"
+                                    name="duration"
+                                    id="duration-25"
+                                    value="Around 2.5 hours"
+                                >
+
+                                <label for="duration-25">
+                                    <span class="choice-indicator"></span>
+                                    Around 2.5 hours
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="radio"
+                                    name="duration"
+                                    id="duration-3"
+                                    value="Around 3 hours"
+                                >
+
+                                <label for="duration-3">
+                                    <span class="choice-indicator"></span>
+                                    Around 3 hours
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="radio"
+                                    name="duration"
+                                    id="duration-flex"
+                                    value="I'm flexible"
+                                >
+
+                                <label for="duration-flex">
+                                    <span class="choice-indicator"></span>
+                                    I'm flexible
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <p
+                            class="error"
+                            id="duration-error"
+                        >
+                            Please choose one.
+                        </p>
+
+                    </div>
+
+
+                    <!-- ACTIVITIES -->
+
+                    <div
+                        class="form-group"
+                        id="activities-group"
+                    >
+
+                        <span class="group-title">
+                            What would you enjoy?
+                            <span class="required">*</span>
+                        </span>
+
+                        <div class="choice-grid">
+
+                            <div class="choice">
+                                <input
+                                    type="checkbox"
+                                    name="activities"
+                                    id="coffee"
+                                    value="Coffee or tea"
+                                >
+
+                                <label for="coffee">
+                                    <span class="choice-indicator"></span>
+                                    Coffee or tea
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="checkbox"
+                                    name="activities"
+                                    id="dinner"
+                                    value="Dinner"
+                                >
+
+                                <label for="dinner">
+                                    <span class="choice-indicator"></span>
+                                    Dinner
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="checkbox"
+                                    name="activities"
+                                    id="juice"
+                                    value="Juice and snacks"
+                                >
+
+                                <label for="juice">
+                                    <span class="choice-indicator"></span>
+                                    Juice and snacks
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="checkbox"
+                                    name="activities"
+                                    id="sunset"
+                                    value="Seaside or sunset"
+                                >
+
+                                <label for="sunset">
+                                    <span class="choice-indicator"></span>
+                                    Seaside or sunset
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="checkbox"
+                                    name="activities"
+                                    id="walk"
+                                    value="Evening walk"
+                                >
+
+                                <label for="walk">
+                                    <span class="choice-indicator"></span>
+                                    Evening walk
+                                </label>
+                            </div>
+
+                            <div class="choice">
+                                <input
+                                    type="checkbox"
+                                    name="activities"
+                                    id="talk"
+                                    value="Sitting and talking"
+                                >
+
+                                <label for="talk">
+                                    <span class="choice-indicator"></span>
+                                    Sitting and talking
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <p
+                            class="error"
+                            id="activities-error"
+                        >
+                            Pick at least one.
+                        </p>
+
+                    </div>
+
+
+                    <!-- AVOID -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="group-title"
+                            for="avoid"
+                        >
+                            Anything you'd rather skip?
+                        </label>
+
+                        <textarea
+                            id="avoid"
+                            name="avoid"
+                            placeholder="Anything you don't enjoy..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="group-title"
+                            for="message"
+                        >
+                            Anything else you want me to know?
+                        </label>
+
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder="Tell me anything..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="note">
+                        No need to overthink this.
+                        Just choose what feels good to you.
+                        I'll handle the little details.
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            id="submit-btn"
+                        >
+                            Send my answers
+                        </button>
+
+                    </div>
+
+                    <p
+                        class="error"
+                        id="submit-error"
+                        aria-live="polite"
+                    ></p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SCREEN 6 — SUCCESS
+        ================================================= -->
+
+        <section
+            class="screen"
+            id="screen-6"
+            aria-labelledby="success-title"
+        >
+
+            <div class="card success-card">
+
+                <div class="content">
+
+                    <div class="heart-mark">
+                        ♥
+                    </div>
+
+                    <div class="eyebrow">
+                        It's official
+                    </div>
+
+                    <h2 id="success-title">
+                        Perfect.<br>
+                        <span class="italic">It's a plan.</span>
+                    </h2>
+
+                    <p class="lead">
+                        I've got everything I need.
+                        You tell me what you like,
+                        and I'll take care of the rest.
+                    </p>
+
+                    <p class="lead">
+                        See you soon.
+                    </p>
+
+                    <p class="small-message">
+                        And yes... I actually made all
+                        of this just for you.
+                    </p>
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-soft"
+                            type="button"
+                            id="ps-btn"
+                        >
+                            Wait... there's one more thing
+                        </button>
+
+                    </div>
+
+                    <div
+                        class="ps-box"
+                        id="ps-box"
+                    >
+                        <strong>P.S.</strong>
+                        You probably didn't expect a whole
+                        website for one question.
+                        Neither did I.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SCREEN 7 — DECLINE
+        ================================================= -->
+
+        <section
+            class="screen"
+            id="screen-7"
+            aria-labelledby="decline-title"
+        >
+
+            <div class="card decline-card">
+
+                <div class="content">
+
+                    <div class="heart-mark">
+                        ♡
+                    </div>
+
+                    <div class="eyebrow">
+                        No hard feelings
+                    </div>
+
+                    <h2 id="decline-title">
+                        No worries.<br>
+                        <span class="italic">Really.</span>
+                    </h2>
+
+                    <p class="lead">
+                        Thank you for being honest.
+                        I appreciate that more than
+                        a forced yes.
+                    </p>
+
+                    <p class="lead">
+                        Our friendship is still good.
+                    </p>
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-outline"
+                            type="button"
+                            id="restart-btn"
+                        >
+                            Start again
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       SETTINGS
+    ========================================================= */
+
+    const WHATSAPP_NUMBER = "252615820767";
+
+    const GOOGLE_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbyRsSsDjN7Fsc2dqpH9V-t3Kc_pmHthxHllneIIzNJ7wXGjBPvwmY7Gk58An5RSftWSNQ/exec";
+
+
+    /* =========================================================
+       DATE LIMIT
+    ========================================================= */
+
+    const ALLOWED_DATES = [
+        "2026-10-07",
+        "2026-10-08",
+        "2026-10-09"
+    ];
+
+
+    /* =========================================================
+       STATE
+    ========================================================= */
+
+    let noAttempts = 0;
+
+
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
+
+    const screens =
+        document.querySelectorAll(".screen");
+
+    const startBtn =
+        document.getElementById("start-btn");
+
+    const questionBtn =
+        document.getElementById("question-btn");
+
+    const yesBtn =
+        document.getElementById("yes-btn");
+
+    const noBtn =
+        document.getElementById("no-btn");
+
+    const honestNoBtn =
+        document.getElementById("honest-no-btn");
+
+    const planBtn =
+        document.getElementById("plan-btn");
+
+    const submitBtn =
+        document.getElementById("submit-btn");
+
+    const psBtn =
+        document.getElementById("ps-btn");
+
+    const psBox =
+        document.getElementById("ps-box");
+
+    const restartBtn =
+        document.getElementById("restart-btn");
+
+    const noMessage =
+        document.getElementById("no-message");
+
+    const questionActions =
+        document.querySelector(".question-actions");
+
+    const dateInput =
+        document.getElementById("date");
+
+
+    /* =========================================================
+       SCREEN NAVIGATION
+    ========================================================= */
+
+    function showScreen(number) {
+
+        screens.forEach((screen) => {
+            screen.classList.remove("active");
+        });
+
+        const target =
+            document.getElementById(
+                `screen-${number}`
+            );
+
+        if (target) {
+            target.classList.add("active");
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    }
+
+
+    /* =========================================================
+       BUTTON NAVIGATION
+    ========================================================= */
+
+    startBtn.addEventListener(
+        "click",
+        () => {
+            showScreen(2);
+        }
+    );
+
+
+    questionBtn.addEventListener(
+        "click",
+        () => {
+            showScreen(3);
+        }
+    );
+
+
+    yesBtn.addEventListener(
+        "click",
+        () => {
+            showScreen(4);
+        }
+    );
+
+
+    planBtn.addEventListener(
+        "click",
+        () => {
+            showScreen(5);
+        }
+    );
+
+
+    honestNoBtn.addEventListener(
+        "click",
+        () => {
+            showScreen(7);
+        }
+    );
+
+
+    restartBtn.addEventListener(
+        "click",
+        () => {
+
+            noAttempts = 0;
+
+            noMessage.textContent = "";
+
+            noBtn.textContent = "No";
+
+            noBtn.style.position = "";
+            noBtn.style.left = "";
+            noBtn.style.top = "";
+            noBtn.style.transform = "";
+
+            showScreen(1);
+        }
+    );
+
+
+    /* =========================================================
+       NO BUTTON
+    ========================================================= */
+
+    function handleNoAttempt(event) {
+
+        if (noAttempts >= 5) {
+            return;
+        }
+
+        if (event) {
+            event.preventDefault();
+        }
+
+        noAttempts++;
+
+        const messages = [
+            "Nice try.",
+            "That button seems a little shy.",
+            "You really went for it?",
+            "Okay... I see what you're doing.",
+            "Alright. I'll stop running."
+        ];
+
+        noMessage.textContent =
+            messages[
+                Math.min(
+                    noAttempts - 1,
+                    messages.length - 1
+                )
+            ];
+
+        if (noAttempts >= 5) {
+
+            noBtn.textContent =
+                "No — I mean it";
+
+            noBtn.style.position =
+                "relative";
+
+            noBtn.style.left = "0";
+            noBtn.style.top = "0";
+
+            return;
+        }
+
+
+        /* =============================================
+           MOVE BUTTON
+        ============================================= */
+
+        const container =
+            questionActions;
+
+        const containerRect =
+            container.getBoundingClientRect();
+
+        const buttonRect =
+            noBtn.getBoundingClientRect();
+
+        const padding = 10;
+
+        const maxX =
+            Math.max(
+                0,
+                containerRect.width -
+                buttonRect.width -
+                padding * 2
+            );
+
+        const maxY =
+            Math.max(
+                0,
+                containerRect.height -
+                buttonRect.height -
+                padding * 2
+            );
+
+        const randomX =
+            padding +
+            Math.random() * maxX;
+
+        const randomY =
+            padding +
+            Math.random() * maxY;
+
+        noBtn.style.position = "absolute";
+
+        noBtn.style.left =
+            `${randomX}px`;
+
+        noBtn.style.top =
+            `${randomY}px`;
+    }
+
+
+    noBtn.addEventListener(
+        "pointerdown",
+        handleNoAttempt
+    );
+
+
+    noBtn.addEventListener(
+        "click",
+        () => {
+
+            if (noAttempts >= 5) {
+                showScreen(7);
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       KEYBOARD SUPPORT
+    ========================================================= */
+
+    noBtn.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Enter" ||
+                event.key === " "
+            ) {
+
+                event.preventDefault();
+
+                if (noAttempts < 5) {
+
+                    handleNoAttempt(event);
+
+                } else {
+
+                    showScreen(7);
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       DATE
+    ========================================================= */
+
+    dateInput.min =
+        "2026-10-07";
+
+    dateInput.max =
+        "2026-10-09";
+
+
+    /* =========================================================
+       VALIDATION HELPERS
+    ========================================================= */
+
+    function showFieldError(
+        groupId,
+        errorId,
+        message
+    ) {
+
+        const group =
+            document.getElementById(groupId);
+
+        const error =
+            document.getElementById(errorId);
+
+        if (group) {
+            group.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        if (error) {
+            error.textContent = message;
+            error.classList.add("show");
+        }
+    }
+
+
+    function clearErrors() {
+
+        document
+            .querySelectorAll(".error")
+            .forEach((error) => {
+                error.classList.remove("show");
+                error.textContent = "";
+            });
+
+    }
+
+
+    /* =========================================================
+       FORM DATA
+    ========================================================= */
+
+    function collectFormData() {
+
+        const name =
+            document
+                .getElementById("name")
+                .value
+                .trim();
+
+        const date =
+            dateInput.value;
+
+        const startTime =
+            document.querySelector(
+                'input[name="startTime"]:checked'
+            )?.value || "";
+
+        const duration =
+            document.querySelector(
+                'input[name="duration"]:checked'
+            )?.value || "";
+
+        const activities =
+            Array.from(
+                document.querySelectorAll(
+                    'input[name="activities"]:checked'
+                )
+            ).map(
+                (input) => input.value
+            );
+
+        const avoid =
+            document
+                .getElementById("avoid")
+                .value
+                .trim();
+
+        const message =
+            document
+                .getElementById("message")
+                .value
+                .trim();
+
+        return {
+            name,
+            date,
+            startTime,
+            duration,
+            activities,
+            avoid,
+            message
+        };
+    }
+
+
+    /* =========================================================
+       VALIDATE FORM
+    ========================================================= */
+
+    function validateForm(data) {
+
+        clearErrors();
+
+        let isValid = true;
+
+
+        if (!data.name) {
+
+            showFieldError(
+                "name-group",
+                "name-error",
+                "Please enter your name."
+            );
+
+            isValid = false;
+        }
+
+
+        if (!data.date) {
+
+            showFieldError(
+                "date-group",
+                "date-error",
+                "Please choose a date."
+            );
+
+            isValid = false;
+
+        } else if (
+            !ALLOWED_DATES.includes(
+                data.date
+            )
+        ) {
+
+            showFieldError(
+                "date-group",
+                "date-error",
+                "Please choose October 7, 8, or 9, 2026."
+            );
+
+            isValid = false;
+        }
+
+
+        if (!data.startTime) {
+
+            showFieldError(
+                "time-group",
+                "time-error",
+                "Please choose a time."
+            );
+
+            isValid = false;
+        }
+
+
+        if (!data.duration) {
+
+            showFieldError(
+                "duration-group",
+                "duration-error",
+                "Please choose one."
+            );
+
+            isValid = false;
+        }
+
+
+        if (
+            data.activities.length === 0
+        ) {
+
+            showFieldError(
+                "activities-group",
+                "activities-error",
+                "Pick at least one."
+            );
+
+            isValid = false;
+        }
+
+
+        return isValid;
+    }
+
+
+    /* =========================================================
+       DATE FORMAT
+    ========================================================= */
+
+    function formatDate(dateString) {
+
+        const date =
+            new Date(
+                `${dateString}T00:00:00`
+            );
+
+        return date.toLocaleDateString(
+            "en-US",
+            {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            }
+        );
+    }
+
+
+    /* =========================================================
+       PRIVATE CODE
+    ========================================================= */
+
+    function getPrivateCode(attempts) {
+
+        const codes = {
+
+            0: "Q7-K2",
+
+            1: "L4-M8",
+
+            2: "X9-R3",
+
+            3: "M4-X9",
+
+            4: "P6-T1",
+
+            5: "R8-P3"
+
+        };
+
+        return (
+            codes[attempts] ||
+            `Z${attempts}-K7`
+        );
+    }
+
+
+    /* =========================================================
+       WHATSAPP MESSAGE
+    ========================================================= */
+
+    function buildWhatsAppMessage(data) {
+
+        const activities =
+            data.activities
+                .map(
+                    (activity) =>
+                        `• ${activity}`
+                )
+                .join("\n");
+
+
+        const privateCode =
+            getPrivateCode(
+                noAttempts
+            );
+
+
+        return `Hey ❤️
+
+I filled out the little date plan.
+
+Name:
+${data.name}
+
+Date:
+${formatDate(data.date)}
+
+Start time:
+${data.startTime}
+
+Duration:
+${data.duration}
+
+What I'd enjoy:
+${activities}
+
+Anything I'd rather avoid:
+${data.avoid || "Nothing specific"}
+
+Anything else:
+${data.message || "Nothing else"}
+
+Ref:
+${privateCode}
+
+Looking forward to it. ❤️`;
+    }
+
+
+    /* =========================================================
+       SAVE TO GOOGLE SHEETS
+    ========================================================= */
+
+    function saveToGoogleSheet(data) {
+
+        const payload = {
+
+            name: data.name,
+
+            date: data.date,
+
+            startTime:
+                data.startTime,
+
+            duration:
+                data.duration,
+
+            activities:
+                data.activities.join(", "),
+
+            avoid:
+                data.avoid,
+
+            message:
+                data.message,
+
+            noAttempts:
+                noAttempts,
+
+            finalChoice:
+                "YES"
+
+        };
+
+
+        fetch(
+            GOOGLE_SCRIPT_URL,
+            {
+                method: "POST",
+
+                mode: "no-cors",
+
+                headers: {
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+                },
+
+                body:
+                    JSON.stringify(
+                        payload
+                    ),
+
+                keepalive: true
+
+            }
+        ).catch(() => {});
+
+    }
+
+
+    /* =========================================================
+       SUBMIT
+    ========================================================= */
+
+    submitBtn.addEventListener(
+        "click",
+        () => {
+
+            const data =
+                collectFormData();
+
+
+            if (
+                !validateForm(data)
+            ) {
+                return;
+            }
+
+
+            submitBtn.disabled =
+                true;
+
+            submitBtn.textContent =
+                "Saving your answers...";
+
+
+            /*
+             * Save to Google Sheets
+             */
+
+            saveToGoogleSheet(
+                data
+            );
+
+
+            /*
+             * Build WhatsApp message
+             */
+
+            const message =
+                buildWhatsAppMessage(
+                    data
+                );
+
+
+            const whatsappURL =
+                `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+
+            /*
+             * Show success screen first
+             */
+
+            showScreen(6);
+
+
+            /*
+             * Give the browser a moment
+             * before opening WhatsApp.
+             */
+
+            setTimeout(
+                () => {
+
+                    window.location.href =
+                        whatsappURL;
+
+                },
+                700
+            );
+
+
+            /*
+             * Reset button state
+             */
+
+            setTimeout(
+                () => {
+
+                    submitBtn.disabled =
+                        false;
+
+                    submitBtn.textContent =
+                        "Send my answers";
+
+                },
+                1500
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       P.S.
+    ========================================================= */
+
+    psBtn.addEventListener(
+        "click",
+        () => {
+
+            psBox.classList.toggle(
+                "show"
+            );
+
+
+            if (
+                psBox.classList.contains(
+                    "show"
+                )
+            ) {
+
+                psBtn.textContent =
+                    "Okay, that's everything";
+
+            } else {
+
+                psBtn.textContent =
+                    "Wait... there's one more thing";
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
