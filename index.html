@@ -5,30 +5,56 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#151012"
     >
 
     <meta
         name="description"
-        content="A little question for someone special."
+        content="A little question."
     >
 
     <title>A Little Question</title>
 
-    <!-- Fonts -->
+    <!-- Premium typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet"
     >
 
     <style>
 
         /* =====================================================
-           RESET
+           CORE
         ===================================================== */
+
+        :root {
+            --ink: #171113;
+            --ink-soft: #21191c;
+
+            --cream: #f4eee7;
+            --cream-soft: #fbf8f4;
+
+            --wine: #7c304a;
+            --wine-dark: #551d31;
+            --wine-soft: #b8798d;
+
+            --gold: #c8a46a;
+            --gold-soft: #ead9b9;
+
+            --muted: #a79a9c;
+            --line: rgba(255,255,255,.10);
+
+            --serif: "Cormorant Garamond", serif;
+            --sans: "DM Sans", sans-serif;
+        }
 
         * {
             box-sizing: border-box;
@@ -37,27 +63,53 @@
         }
 
         html {
+            min-height: 100%;
+            background: var(--ink);
             scroll-behavior: smooth;
         }
 
         body {
             min-height: 100vh;
-            font-family: "Manrope", sans-serif;
+            min-height: 100svh;
+
+            font-family: var(--sans);
+
             background:
                 radial-gradient(
-                    circle at 15% 15%,
-                    rgba(255, 225, 230, 0.8),
+                    circle at 15% 10%,
+                    rgba(125,48,74,.28),
                     transparent 28%
                 ),
                 radial-gradient(
-                    circle at 85% 85%,
-                    rgba(238, 215, 224, 0.7),
-                    transparent 30%
+                    circle at 90% 85%,
+                    rgba(200,164,106,.10),
+                    transparent 25%
                 ),
-                #f8f4ef;
+                linear-gradient(
+                    135deg,
+                    #130f11 0%,
+                    #1d1518 52%,
+                    #110e10 100%
+                );
 
-            color: #292326;
+            color: var(--cream);
+
             overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+            z-index: 100;
+
+            opacity: .035;
+
+            background-image:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
         }
 
         button,
@@ -67,11 +119,7 @@
         }
 
         button {
-            cursor: pointer;
-        }
-
-        a {
-            color: inherit;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* =====================================================
@@ -79,173 +127,327 @@
         ===================================================== */
 
         .page {
-            min-height: 100vh;
             width: 100%;
+            min-height: 100vh;
+            min-height: 100svh;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 24px 16px;
+
+            padding:
+                max(20px, env(safe-area-inset-top))
+                16px
+                max(20px, env(safe-area-inset-bottom));
         }
 
         .app {
             width: 100%;
-            max-width: 720px;
-            position: relative;
+            max-width: 850px;
         }
 
         /* =====================================================
-           SCREEN
+           TOP BAR
         ===================================================== */
 
-        .screen {
-            display: none;
-            animation: screenIn 0.45s ease;
+        .topbar {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 16px;
+
+            color: rgba(244,238,231,.48);
+            font-size: 10px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
         }
 
-        .screen.active {
-            display: block;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 9px;
         }
 
-        @keyframes screenIn {
-            from {
-                opacity: 0;
-                transform: translateY(14px);
-            }
+        .brand-dot {
+            width: 5px;
+            height: 5px;
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+            border-radius: 50%;
 
-        /* =====================================================
-           MAIN CARD
-        ===================================================== */
+            background: var(--gold);
 
-        .card {
-            position: relative;
-            background: rgba(255, 253, 250, 0.94);
-            border: 1px solid rgba(67, 42, 49, 0.08);
-            border-radius: 32px;
-            padding: 42px 28px;
             box-shadow:
-                0 30px 80px rgba(55, 30, 39, 0.10),
-                0 8px 24px rgba(55, 30, 39, 0.05);
+                0 0 12px rgba(200,164,106,.7);
+        }
+
+        .step {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* =====================================================
+           PROGRESS
+        ===================================================== */
+
+        .progress {
+            width: 100%;
+            height: 2px;
+
+            margin-bottom: 18px;
+
+            background: rgba(255,255,255,.08);
 
             overflow: hidden;
         }
 
-        .card::before {
-            content: "";
-            position: absolute;
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
-            background: rgba(215, 157, 171, 0.10);
-            top: -90px;
-            right: -60px;
+        .progress-bar {
+            width: 14.28%;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--wine),
+                    var(--gold)
+                );
+
+            transition:
+                width .6s cubic-bezier(.22,.61,.36,1);
         }
 
-        .card::after {
+        /* =====================================================
+           SCREENS
+        ===================================================== */
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+
+            animation:
+                reveal .7s cubic-bezier(.22,.61,.36,1);
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform:
+                    translateY(24px)
+                    scale(.985);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        /* =====================================================
+           MAIN PANEL
+        ===================================================== */
+
+        .panel {
+            position: relative;
+
+            min-height: 640px;
+
+            display: flex;
+            align-items: center;
+
+            padding: clamp(34px, 6vw, 72px);
+
+            border:
+                1px solid
+                rgba(255,255,255,.09);
+
+            border-radius: 34px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.075),
+                    rgba(255,255,255,.025)
+                );
+
+            box-shadow:
+                0 45px 120px rgba(0,0,0,.35),
+                inset 0 1px 0 rgba(255,255,255,.07);
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            overflow: hidden;
+        }
+
+        .panel::before {
             content: "";
+
             position: absolute;
-            width: 120px;
-            height: 120px;
+
+            width: 420px;
+            height: 420px;
+
+            top: -250px;
+            right: -160px;
+
             border-radius: 50%;
-            background: rgba(120, 71, 88, 0.05);
-            bottom: -70px;
-            left: -50px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(124,48,74,.38),
+                    transparent 68%
+                );
+
+            pointer-events: none;
+        }
+
+        .panel::after {
+            content: "";
+
+            position: absolute;
+
+            width: 360px;
+            height: 360px;
+
+            bottom: -250px;
+            left: -180px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(200,164,106,.09),
+                    transparent 68%
+                );
+
+            pointer-events: none;
         }
 
         .content {
             position: relative;
             z-index: 2;
+
+            width: 100%;
         }
 
         /* =====================================================
-           SMALL LABEL
+           TYPOGRAPHY
         ===================================================== */
 
-        .eyebrow {
-            display: inline-flex;
+        .kicker {
+            display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
 
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.16em;
+            margin-bottom: 24px;
+
+            color: var(--gold-soft);
+
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .22em;
             text-transform: uppercase;
-
-            color: #8d5b6d;
-            margin-bottom: 20px;
         }
 
-        .eyebrow::before {
+        .kicker::before {
             content: "";
-            width: 22px;
-            height: 1px;
-            background: #c692a3;
-        }
 
-        /* =====================================================
-           HEADINGS
-        ===================================================== */
+            width: 30px;
+            height: 1px;
+
+            background: var(--gold);
+        }
 
         h1,
         h2 {
-            font-family: "DM Serif Display", serif;
+            font-family: var(--serif);
             font-weight: 400;
-            line-height: 1.05;
-            color: #38242c;
+
+            color: var(--cream);
+
+            letter-spacing: -.035em;
+            line-height: .91;
         }
 
         h1 {
-            font-size: clamp(48px, 12vw, 78px);
-            letter-spacing: -0.035em;
-            max-width: 600px;
+            max-width: 700px;
+
+            font-size:
+                clamp(64px, 13vw, 132px);
         }
 
         h2 {
-            font-size: clamp(42px, 10vw, 64px);
-            letter-spacing: -0.03em;
+            max-width: 680px;
+
+            font-size:
+                clamp(54px, 10vw, 100px);
         }
 
-        .italic {
+        .accent {
+            color: #d69bad;
             font-style: italic;
-            color: #9a5e72;
         }
 
         .lead {
-            margin-top: 22px;
-            max-width: 540px;
+            max-width: 570px;
 
-            font-size: 16px;
-            line-height: 1.8;
-            color: #71676b;
+            margin-top: 28px;
+
+            color: rgba(244,238,231,.66);
+
+            font-size:
+                clamp(15px, 2vw, 17px);
+
+            line-height: 1.85;
+        }
+
+        .micro {
+            margin-top: 20px;
+
+            color: rgba(244,238,231,.36);
+
+            font-size: 11px;
+            line-height: 1.7;
         }
 
         /* =====================================================
-           DECORATION
+           SYMBOL
         ===================================================== */
 
-        .heart-mark {
-            width: 54px;
-            height: 54px;
+        .symbol {
+            width: 58px;
+            height: 58px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            margin-bottom: 26px;
+            margin-bottom: 30px;
+
+            border:
+                1px solid
+                rgba(200,164,106,.30);
 
             border-radius: 50%;
-            background: #f2dce2;
-            color: #8d4e65;
 
-            font-size: 22px;
+            color: var(--gold-soft);
+
+            font-family: var(--serif);
+            font-size: 25px;
+
+            background:
+                rgba(200,164,106,.07);
 
             box-shadow:
-                0 10px 25px rgba(141, 78, 101, 0.10);
+                0 0 35px rgba(200,164,106,.08);
         }
 
         /* =====================================================
@@ -253,176 +455,263 @@
         ===================================================== */
 
         .actions {
-            margin-top: 34px;
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
             gap: 12px;
+
+            margin-top: 38px;
         }
 
         .btn {
-            width: 100%;
-            min-height: 56px;
+            min-height: 58px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 0 24px;
 
             border: 0;
-            border-radius: 16px;
+            border-radius: 14px;
 
-            padding: 15px 20px;
-
+            font-size: 13px;
             font-weight: 700;
-            font-size: 14px;
+
+            letter-spacing: .01em;
 
             transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease,
-                background 0.2s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn:active {
-            transform: translateY(0);
+                transform .25s ease,
+                box-shadow .25s ease,
+                background .25s ease;
         }
 
         .btn-primary {
-            background: #4d2937;
-            color: white;
+            color: #fffaf7;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8b3854,
+                    #61243a
+                );
 
             box-shadow:
-                0 12px 24px rgba(77, 41, 55, 0.18);
+                0 14px 35px rgba(101,36,58,.28),
+                inset 0 1px 0 rgba(255,255,255,.13);
         }
 
         .btn-primary:hover {
-            background: #5c3142;
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 18px 42px rgba(101,36,58,.36);
         }
 
-        .btn-soft {
-            background: #f1e3e7;
-            color: #613746;
+        .btn-quiet {
+            color: rgba(244,238,231,.72);
+
+            border:
+                1px solid rgba(255,255,255,.11);
+
+            background:
+                rgba(255,255,255,.045);
         }
 
-        .btn-soft:hover {
-            background: #ead6dc;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #d9c7cd;
-            color: #633c4a;
-        }
-
-        .btn-outline:hover {
-            background: #faf3f5;
-        }
-
-        .btn-danger {
-            background: transparent;
-            border: 1px solid #d8c4ca;
-            color: #78505c;
+        .btn-quiet:hover {
+            background:
+                rgba(255,255,255,.08);
         }
 
         /* =====================================================
            QUESTION
         ===================================================== */
 
-        .question-card {
+        .question-panel {
+            min-height: 680px;
             text-align: center;
         }
 
-        .question-card .heart-mark {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .question-card .lead {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .question-actions {
-            position: relative;
-
-            min-height: 160px;
-
-            margin-top: 30px;
-
+        .question-panel .content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-
-            gap: 12px;
         }
 
-        .yes-btn {
+        .question-panel .kicker {
+            justify-content: center;
+        }
+
+        .question-panel .kicker::before {
+            display: none;
+        }
+
+        .question-panel h2 {
+            max-width: 720px;
+        }
+
+        .question-panel .lead {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* =====================================================
+           MOBILE NO-BUTTON ARENA
+        ===================================================== */
+
+        .no-arena {
+            position: relative;
+
+            width: min(100%, 520px);
+            height: 190px;
+
+            margin-top: 36px;
+
+            border-radius: 24px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            background:
+                radial-gradient(
+                    circle at 50% 50%,
+                    rgba(124,48,74,.10),
+                    transparent 62%
+                );
+
+            overflow: hidden;
+
+            touch-action: none;
+        }
+
+        .yes-question-btn {
             position: relative;
             z-index: 5;
+
+            width: min(100%, 300px);
         }
 
         .no-btn {
-            position: relative;
-            z-index: 4;
+            position: absolute;
+
+            z-index: 10;
+
+            left: 50%;
+            top: 58%;
+
+            min-width: 112px;
+            min-height: 52px;
+
+            padding: 0 20px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.13);
+
+            border-radius: 13px;
+
+            color: rgba(244,238,231,.78);
+
+            background:
+                rgba(255,255,255,.055);
+
+            box-shadow:
+                0 8px 24px rgba(0,0,0,.20);
+
+            transform:
+                translate(-50%, -50%);
+
+            transition:
+                left .22s cubic-bezier(.22,.61,.36,1),
+                top .22s cubic-bezier(.22,.61,.36,1),
+                transform .15s ease,
+                background .2s ease,
+                border .2s ease;
         }
 
-        .decline-link {
-            display: inline-block;
+        .no-btn:active {
+            transform:
+                translate(-50%, -50%)
+                scale(.94);
+        }
+
+        .no-btn.final {
+            color: #fff;
+
+            border-color:
+                rgba(214,155,173,.35);
+
+            background:
+                rgba(124,48,74,.28);
+        }
+
+        .no-status {
+            min-height: 20px;
 
             margin-top: 12px;
+
+            color: rgba(244,238,231,.42);
+
+            font-size: 11px;
+        }
+
+        .honest-no {
+            margin-top: 18px;
 
             border: 0;
             background: transparent;
 
-            color: #8c777e;
-            font-size: 12px;
-            text-decoration: underline;
-            text-underline-offset: 3px;
+            color: rgba(244,238,231,.40);
 
-            cursor: pointer;
+            font-size: 11px;
+
+            text-decoration:
+                underline;
+
+            text-underline-offset: 4px;
         }
 
-        .decline-link:hover {
-            color: #5f424d;
-        }
-
-        .no-message {
-            min-height: 22px;
-            margin-top: 8px;
-
-            color: #8e5d6c;
-            font-size: 13px;
-            font-weight: 600;
+        .honest-no:hover {
+            color: rgba(244,238,231,.68);
         }
 
         /* =====================================================
            FORM
         ===================================================== */
 
-        .form-card {
-            padding-bottom: 34px;
+        .form-panel {
+            align-items: flex-start;
+        }
+
+        .form-wrap {
+            width: 100%;
+            max-width: 650px;
+            margin: auto;
         }
 
         .form-intro {
-            margin-bottom: 30px;
+            margin-bottom: 38px;
         }
 
         .form-group {
-            margin-top: 24px;
+            margin-top: 28px;
         }
 
-        label.group-title,
-        .group-title {
+        .label {
             display: block;
 
-            margin-bottom: 10px;
+            margin-bottom: 11px;
 
-            font-size: 14px;
+            color: rgba(244,238,231,.86);
+
+            font-size: 12px;
             font-weight: 700;
-            color: #443139;
+            letter-spacing: .03em;
         }
 
         .required {
-            color: #a45b70;
+            color: #d69bad;
         }
 
         input[type="text"],
@@ -430,64 +719,74 @@
         textarea {
             width: 100%;
 
-            border: 1px solid #dfd1d5;
-            border-radius: 14px;
-
-            background: #fffdfa;
-            color: #33272d;
+            min-height: 55px;
 
             padding: 15px 16px;
 
+            border:
+                1px solid
+                rgba(255,255,255,.11);
+
+            border-radius: 13px;
+
             outline: none;
 
+            color: var(--cream);
+
+            background:
+                rgba(255,255,255,.045);
+
             transition:
-                border 0.2s ease,
-                box-shadow 0.2s ease;
+                border .2s ease,
+                background .2s ease,
+                box-shadow .2s ease;
         }
 
-        input[type="text"]:focus,
-        input[type="date"]:focus,
+        input::placeholder,
+        textarea::placeholder {
+            color:
+                rgba(244,238,231,.28);
+        }
+
+        input:focus,
         textarea:focus {
-            border-color: #ad7284;
+            border-color:
+                rgba(214,155,173,.55);
+
+            background:
+                rgba(255,255,255,.065);
 
             box-shadow:
-                0 0 0 4px rgba(173, 114, 132, 0.10);
+                0 0 0 4px
+                rgba(214,155,173,.07);
+        }
+
+        input[type="date"] {
+            color-scheme: dark;
         }
 
         textarea {
-            min-height: 110px;
+            min-height: 120px;
             resize: vertical;
         }
 
-        .date-hint {
+        .hint {
             margin-top: 8px;
 
-            font-size: 12px;
-            color: #8b7c82;
+            color:
+                rgba(244,238,231,.35);
+
+            font-size: 10px;
+            line-height: 1.6;
         }
-
-        .error {
-            display: none;
-
-            margin-top: 7px;
-
-            color: #a3475e;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .error.show {
-            display: block;
-        }
-
-        /* =====================================================
-           RADIO / CHECKBOX
-        ===================================================== */
 
         .choice-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 9px;
         }
 
         .choice {
@@ -496,154 +795,181 @@
 
         .choice input {
             position: absolute;
+
             opacity: 0;
+
             pointer-events: none;
         }
 
         .choice label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
             min-height: 52px;
 
-            padding: 13px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
 
-            border: 1px solid #e1d5d8;
-            border-radius: 14px;
+            padding: 12px;
 
-            background: #fffdfa;
+            border:
+                1px solid
+                rgba(255,255,255,.09);
 
-            color: #5c4b51;
-            font-size: 13px;
+            border-radius: 12px;
+
+            color:
+                rgba(244,238,231,.58);
+
+            background:
+                rgba(255,255,255,.035);
+
+            font-size: 11px;
             font-weight: 600;
 
             cursor: pointer;
 
             transition:
-                border 0.2s ease,
-                background 0.2s ease,
-                transform 0.2s ease;
+                background .2s ease,
+                border .2s ease,
+                color .2s ease;
         }
 
         .choice label:hover {
-            transform: translateY(-1px);
-            background: #fdf8f9;
+            background:
+                rgba(255,255,255,.065);
         }
 
-        .choice input:checked + label {
-            border-color: #a96b7d;
-            background: #f7e9ed;
-            color: #613746;
-        }
+        .indicator {
+            width: 17px;
+            height: 17px;
 
-        .choice-indicator {
-            width: 18px;
-            height: 18px;
+            flex: 0 0 17px;
 
-            flex: 0 0 18px;
+            border:
+                1px solid
+                rgba(255,255,255,.22);
 
-            border: 1.5px solid #cdbbc2;
             border-radius: 50%;
         }
 
-        .choice input[type="checkbox"] + label .choice-indicator {
+        .checkbox .indicator {
             border-radius: 5px;
         }
 
-        .choice input:checked + label .choice-indicator {
-            border-color: #92556a;
-            background: #92556a;
+        .choice input:checked + label {
+            color: #fff;
 
-            box-shadow:
-                inset 0 0 0 4px #f7e9ed;
+            border-color:
+                rgba(214,155,173,.46);
+
+            background:
+                rgba(124,48,74,.18);
         }
 
-        /* =====================================================
-           NOTE
-        ===================================================== */
+        .choice input:checked + label .indicator {
+            border-color: #c77c95;
+
+            background:
+                #c77c95;
+
+            box-shadow:
+                inset 0 0 0 4px
+                rgba(255,255,255,.85);
+        }
 
         .note {
-            margin-top: 26px;
+            margin-top: 28px;
 
-            padding: 16px;
+            padding: 17px;
 
-            border-left: 3px solid #c38b9c;
-            border-radius: 0 12px 12px 0;
+            border:
+                1px solid
+                rgba(200,164,106,.14);
 
-            background: #faf0f3;
+            border-radius: 14px;
 
-            color: #6f5961;
-            font-size: 12px;
-            line-height: 1.7;
+            color:
+                rgba(244,238,231,.50);
+
+            background:
+                rgba(200,164,106,.045);
+
+            font-size: 11px;
+            line-height: 1.75;
+        }
+
+        .error {
+            display: none;
+
+            margin-top: 7px;
+
+            color: #df91a7;
+
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .error.show {
+            display: block;
         }
 
         /* =====================================================
            SUCCESS
         ===================================================== */
 
-        .success-card {
+        .center-panel {
             text-align: center;
         }
 
-        .success-card .heart-mark {
+        .center-panel .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .center-panel .kicker {
+            justify-content: center;
+        }
+
+        .center-panel .kicker::before {
+            display: none;
+        }
+
+        .center-panel .lead {
             margin-left: auto;
             margin-right: auto;
         }
 
-        .success-card .lead {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .small-message {
-            margin-top: 25px;
-
-            font-size: 12px;
-            line-height: 1.7;
-
-            color: #8b777e;
-        }
-
-        .ps-box {
+        .ps {
             display: none;
 
-            margin-top: 20px;
+            width: min(100%, 500px);
 
+            margin-top: 20px;
             padding: 18px;
 
-            border-radius: 16px;
-
-            background: #f6e8ec;
-            color: #694552;
-
-            font-size: 13px;
-            line-height: 1.7;
+            border-radius: 15px;
 
             text-align: left;
+
+            color:
+                rgba(244,238,231,.68);
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            font-size: 11px;
+            line-height: 1.75;
         }
 
-        .ps-box.show {
+        .ps.show {
             display: block;
-            animation: screenIn 0.3s ease;
-        }
 
-        /* =====================================================
-           DECLINE
-        ===================================================== */
-
-        .decline-card {
-            text-align: center;
-        }
-
-        .decline-card .heart-mark {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .decline-card .lead {
-            margin-left: auto;
-            margin-right: auto;
+            animation:
+                reveal .4s ease;
         }
 
         /* =====================================================
@@ -651,78 +977,159 @@
         ===================================================== */
 
         .footer {
-            margin-top: 18px;
+            margin-top: 14px;
 
             text-align: center;
 
-            color: #a39499;
-            font-size: 10px;
-            letter-spacing: 0.08em;
-        }
+            color:
+                rgba(244,238,231,.22);
 
-        /* =====================================================
-           FOCUS
-        ===================================================== */
+            font-size: 9px;
 
-        button:focus-visible,
-        input:focus-visible,
-        textarea:focus-visible,
-        label:focus-visible {
-            outline: 3px solid rgba(151, 90, 110, 0.25);
-            outline-offset: 3px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
         }
 
         /* =====================================================
            MOBILE
         ===================================================== */
 
-        @media (max-width: 600px) {
+        @media (max-width: 620px) {
 
             .page {
-                padding: 14px;
-                align-items: flex-start;
-                padding-top: 18px;
+                padding:
+                    max(13px, env(safe-area-inset-top))
+                    12px
+                    max(14px, env(safe-area-inset-bottom));
             }
 
-            .card {
-                padding: 32px 20px;
+            .topbar {
+                padding: 0 3px;
+            }
+
+            .panel {
+                min-height: calc(100svh - 105px);
+
+                padding:
+                    34px 20px 30px;
+
                 border-radius: 25px;
             }
 
+            .symbol {
+                width: 50px;
+                height: 50px;
+
+                margin-bottom: 24px;
+
+                font-size: 22px;
+            }
+
             h1 {
-                font-size: 50px;
+                font-size:
+                    clamp(59px, 17vw, 88px);
             }
 
             h2 {
-                font-size: 44px;
+                font-size:
+                    clamp(50px, 14vw, 76px);
             }
 
             .lead {
-                font-size: 15px;
-                line-height: 1.75;
+                font-size: 14px;
+                line-height: 1.78;
             }
 
-            .question-actions {
-                min-height: 175px;
+            .actions {
+                flex-direction: column;
             }
 
             .btn {
+                width: 100%;
+            }
+
+            .question-panel {
+                min-height: calc(100svh - 105px);
+            }
+
+            .no-arena {
+                height: 210px;
+
+                margin-top: 32px;
+            }
+
+            /*
+             * Larger touch target.
+             * The button always remains inside
+             * the arena, so it cannot disappear
+             * beyond the screen.
+             */
+
+            .no-btn {
+                min-width: 120px;
+                min-height: 54px;
+            }
+
+            .choice-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .choice label {
                 min-height: 55px;
+            }
+
+            .form-panel {
+                min-height: auto;
             }
         }
 
         /* =====================================================
-           REDUCED MOTION
+           VERY SMALL PHONES
         ===================================================== */
+
+        @media (max-width: 370px) {
+
+            .panel {
+                padding-left: 17px;
+                padding-right: 17px;
+            }
+
+            h1 {
+                font-size: 56px;
+            }
+
+            h2 {
+                font-size: 47px;
+            }
+
+            .no-arena {
+                height: 195px;
+            }
+        }
+
+        /* =====================================================
+           ACCESSIBILITY
+        ===================================================== */
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        label:focus-visible {
+            outline:
+                3px solid
+                rgba(214,155,173,.38);
+
+            outline-offset: 3px;
+        }
 
         @media (prefers-reduced-motion: reduce) {
 
             *,
             *::before,
             *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
                 scroll-behavior: auto !important;
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
             }
         }
 
@@ -735,47 +1142,79 @@
 
     <main class="app">
 
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+            <div class="brand">
+                <span class="brand-dot"></span>
+                A little question
+            </div>
+
+            <div
+                class="step"
+                id="step-counter"
+            >
+                01 / 07
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress">
+            <div
+                class="progress-bar"
+                id="progress-bar"
+            ></div>
+        </div>
+
+
         <!-- =================================================
-             SCREEN 1
+             01 — INTRO
         ================================================= -->
 
         <section
             class="screen active"
             id="screen-1"
-            aria-labelledby="intro-title"
         >
 
-            <div class="card">
+            <div class="panel">
 
                 <div class="content">
 
-                    <div class="heart-mark">
-                        ♡
+                    <div class="symbol">
+                        ✦
                     </div>
 
-                    <div class="eyebrow">
-                        Just a little something
+                    <div class="kicker">
+                        Something I made for you
                     </div>
 
-                    <h1 id="intro-title">
+                    <h1>
                         Hey,<br>
-                        <span class="italic">you.</span>
+                        <span class="accent">you.</span>
                     </h1>
 
                     <p class="lead">
-                        I made something small for you.
-                        Nothing complicated. Just give me
-                        a minute and see where this goes.
+                        I could have just asked you normally.
+                        Where would be the fun in that?
+                    </p>
+
+                    <p class="micro">
+                        Take a minute. That's all I ask.
                     </p>
 
                     <div class="actions">
 
                         <button
                             class="btn btn-primary"
-                            type="button"
                             id="start-btn"
+                            type="button"
                         >
-                            Okay, show me
+                            I'm listening
+                            <span>→</span>
                         </button>
 
                     </div>
@@ -784,61 +1223,56 @@
 
             </div>
 
-            <div class="footer">
-                Made with a little thought.
-            </div>
-
         </section>
 
 
         <!-- =================================================
-             SCREEN 2
+             02 — BUILDUP
         ================================================= -->
 
         <section
             class="screen"
             id="screen-2"
-            aria-labelledby="before-title"
         >
 
-            <div class="card">
+            <div class="panel">
 
                 <div class="content">
 
-                    <div class="heart-mark">
-                        ✦
+                    <div class="symbol">
+                        ♢
                     </div>
 
-                    <div class="eyebrow">
-                        Before I ask
+                    <div class="kicker">
+                        Before the question
                     </div>
 
-                    <h2 id="before-title">
-                        One honest<br>
-                        <span class="italic">thought.</span>
+                    <h2>
+                        There's something<br>
+                        I've been <span class="accent">thinking about.</span>
                     </h2>
 
                     <p class="lead">
-                        I really enjoy having you around.
-                        Talking with you, laughing with you,
-                        and simply spending time together
-                        has become something I genuinely
-                        appreciate.
+                        I like the way we can talk about absolutely
+                        nothing and somehow still have a good time.
+                        I like having you around.
                     </p>
 
                     <p class="lead">
-                        So I thought I should stop keeping
-                        one little question to myself.
+                        And lately, I've been wondering whether
+                        we should turn some of that time into
+                        an evening that's just ours.
                     </p>
 
                     <div class="actions">
 
                         <button
                             class="btn btn-primary"
-                            type="button"
                             id="question-btn"
+                            type="button"
                         >
-                            There's something I want to ask
+                            Ask me
+                            <span>→</span>
                         </button>
 
                     </div>
@@ -851,67 +1285,74 @@
 
 
         <!-- =================================================
-             SCREEN 3 — QUESTION
+             03 — QUESTION
         ================================================= -->
 
         <section
             class="screen"
             id="screen-3"
-            aria-labelledby="question-title"
         >
 
-            <div class="card question-card">
+            <div class="panel question-panel">
 
                 <div class="content">
 
-                    <div class="heart-mark">
+                    <div class="symbol">
                         ♡
                     </div>
 
-                    <div class="eyebrow">
-                        The question
+                    <div class="kicker">
+                        Here it is
                     </div>
 
-                    <h2 id="question-title">
-                        Would you go on<br>
-                        a <span class="italic">date</span> with me?
+                    <h2>
+                        Would you<br>
+                        go on a <span class="accent">date</span><br>
+                        with me?
                     </h2>
 
                     <p class="lead">
-                        Just the two of us. Good food,
-                        a nice place, and no pressure.
+                        Just us. Somewhere nice.
+                        Good food, good conversation,
+                        and no expectations.
                     </p>
 
-                    <div class="question-actions">
+
+                    <div class="no-arena">
 
                         <button
-                            class="btn btn-primary yes-btn"
-                            type="button"
+                            class="btn btn-primary yes-question-btn"
                             id="yes-btn"
+                            type="button"
                         >
-                            Yes, I'd love that
+                            Yes. Let's do it
+                            <span>♥</span>
                         </button>
 
+
                         <button
-                            class="btn btn-outline no-btn"
-                            type="button"
+                            class="no-btn"
                             id="no-btn"
+                            type="button"
+                            aria-label="No"
                         >
-                            No
+                            Not quite
                         </button>
 
                     </div>
 
+
                     <div
-                        class="no-message"
-                        id="no-message"
+                        class="no-status"
+                        id="no-status"
                         aria-live="polite"
                     ></div>
 
+
                     <button
-                        class="decline-link"
-                        type="button"
+                        class="honest-no"
                         id="honest-no-btn"
+                        type="button"
                     >
                         I'd rather say no
                     </button>
@@ -924,51 +1365,45 @@
 
 
         <!-- =================================================
-             SCREEN 4 — YES
+             04 — YES
         ================================================= -->
 
         <section
             class="screen"
             id="screen-4"
-            aria-labelledby="yes-title"
         >
 
-            <div class="card">
+            <div class="panel center-panel">
 
                 <div class="content">
 
-                    <div class="heart-mark">
+                    <div class="symbol">
                         ♥
                     </div>
 
-                    <div class="eyebrow">
-                        Well then...
+                    <div class="kicker">
+                        Well, look at that
                     </div>
 
-                    <h2 id="yes-title">
-                        That's a<br>
-                        <span class="italic">yes.</span>
+                    <h2>
+                        It's a <span class="accent">yes.</span>
                     </h2>
 
                     <p class="lead">
-                        I was hoping you'd say that.
-                        Now let's make sure the evening
-                        is actually worth remembering.
-                    </p>
-
-                    <p class="lead">
-                        I have one last little thing
-                        for you.
+                        I was hoping we'd get here.
+                        Now let's make the actual evening
+                        worth the dramatic build-up.
                     </p>
 
                     <div class="actions">
 
                         <button
                             class="btn btn-primary"
-                            type="button"
                             id="plan-btn"
+                            type="button"
                         >
-                            Let's plan the evening
+                            Let's plan it
+                            <span>→</span>
                         </button>
 
                     </div>
@@ -981,37 +1416,36 @@
 
 
         <!-- =================================================
-             SCREEN 5 — FORM
+             05 — FORM
         ================================================= -->
 
         <section
             class="screen"
             id="screen-5"
-            aria-labelledby="plan-title"
         >
 
-            <div class="card form-card">
+            <div class="panel form-panel">
 
-                <div class="content">
+                <div class="content form-wrap">
 
                     <div class="form-intro">
 
-                        <div class="heart-mark">
+                        <div class="symbol">
                             ✦
                         </div>
 
-                        <div class="eyebrow">
-                            Make it yours
+                        <div class="kicker">
+                            Your evening
                         </div>
 
-                        <h2 id="plan-title">
-                            Let's plan<br>
-                            the <span class="italic">evening.</span>
+                        <h2>
+                            Tell me what<br>
+                            sounds <span class="accent">good.</span>
                         </h2>
 
                         <p class="lead">
-                            Tell me what sounds good to you.
-                            I'll take care of the rest.
+                            You choose the mood.
+                            I'll handle the details.
                         </p>
 
                     </div>
@@ -1025,10 +1459,10 @@
                     >
 
                         <label
-                            class="group-title"
+                            class="label"
                             for="name"
                         >
-                            What should I call you?
+                            Your name
                             <span class="required">*</span>
                         </label>
 
@@ -1037,16 +1471,14 @@
                             name="name"
                             type="text"
                             autocomplete="name"
-                            placeholder="Your name"
+                            placeholder="What should I call you?"
                             required
                         >
 
                         <p
                             class="error"
                             id="name-error"
-                        >
-                            Please enter your name.
-                        </p>
+                        ></p>
 
                     </div>
 
@@ -1059,10 +1491,10 @@
                     >
 
                         <label
-                            class="group-title"
+                            class="label"
                             for="date"
                         >
-                            Which evening works for you?
+                            Pick an evening
                             <span class="required">*</span>
                         </label>
 
@@ -1075,17 +1507,14 @@
                             required
                         >
 
-                        <p class="date-hint">
-                            Available dates:
+                        <p class="hint">
                             October 7, 8, or 9, 2026.
                         </p>
 
                         <p
                             class="error"
                             id="date-error"
-                        >
-                            Please choose October 7, 8, or 9, 2026.
-                        </p>
+                        ></p>
 
                     </div>
 
@@ -1097,8 +1526,8 @@
                         id="time-group"
                     >
 
-                        <span class="group-title">
-                            What time sounds good?
+                        <span class="label">
+                            What time feels right?
                             <span class="required">*</span>
                         </span>
 
@@ -1106,71 +1535,71 @@
 
                             <div class="choice">
                                 <input
-                                    type="radio"
-                                    name="startTime"
                                     id="time-5"
+                                    name="startTime"
+                                    type="radio"
                                     value="5:00 PM"
                                 >
 
                                 <label for="time-5">
-                                    <span class="choice-indicator"></span>
+                                    <span class="indicator"></span>
                                     5:00 PM
                                 </label>
                             </div>
 
                             <div class="choice">
                                 <input
-                                    type="radio"
-                                    name="startTime"
                                     id="time-530"
+                                    name="startTime"
+                                    type="radio"
                                     value="5:30 PM"
                                 >
 
                                 <label for="time-530">
-                                    <span class="choice-indicator"></span>
+                                    <span class="indicator"></span>
                                     5:30 PM
                                 </label>
                             </div>
 
                             <div class="choice">
                                 <input
-                                    type="radio"
-                                    name="startTime"
                                     id="time-6"
+                                    name="startTime"
+                                    type="radio"
                                     value="6:00 PM"
                                 >
 
                                 <label for="time-6">
-                                    <span class="choice-indicator"></span>
+                                    <span class="indicator"></span>
                                     6:00 PM
                                 </label>
                             </div>
 
                             <div class="choice">
                                 <input
-                                    type="radio"
-                                    name="startTime"
                                     id="time-630"
+                                    name="startTime"
+                                    type="radio"
                                     value="6:30 PM"
                                 >
 
                                 <label for="time-630">
-                                    <span class="choice-indicator"></span>
+                                    <span class="indicator"></span>
                                     6:30 PM
                                 </label>
                             </div>
 
                             <div class="choice">
                                 <input
-                                    type="radio"
-                                    name="startTime"
                                     id="time-other"
+                                    name="startTime"
+                                    type="radio"
                                     value="Something else"
                                 >
 
                                 <label for="time-other">
-                                    <span class="choice-indicator"></span>
-                                    Something else
+                                    <span class="indicator"></span>
+                                    I'll choose later
                                 </label>
                             </div>
 
@@ -1179,9 +1608,7 @@
                         <p
                             class="error"
                             id="time-error"
-                        >
-                            Please choose a time.
-                        </p>
+                        ></p>
 
                     </div>
 
@@ -1193,8 +1620,8 @@
                         id="duration-group"
                     >
 
-                        <span class="group-title">
-                            How long should we keep the evening going?
+                        <span class="label">
+                            How long are you thinking?
                             <span class="required">*</span>
                         </span>
 
@@ -1202,43 +1629,43 @@
 
                             <div class="choice">
                                 <input
-                                    type="radio"
-                                    name="duration"
                                     id="duration-25"
+                                    name="duration"
+                                    type="radio"
                                     value="Around 2.5 hours"
                                 >
 
                                 <label for="duration-25">
-                                    <span class="choice-indicator"></span>
-                                    Around 2.5 hours
+                                    <span class="indicator"></span>
+                                    About 2½ hours
                                 </label>
                             </div>
 
                             <div class="choice">
                                 <input
-                                    type="radio"
-                                    name="duration"
                                     id="duration-3"
+                                    name="duration"
+                                    type="radio"
                                     value="Around 3 hours"
                                 >
 
                                 <label for="duration-3">
-                                    <span class="choice-indicator"></span>
-                                    Around 3 hours
+                                    <span class="indicator"></span>
+                                    About 3 hours
                                 </label>
                             </div>
 
                             <div class="choice">
                                 <input
-                                    type="radio"
-                                    name="duration"
                                     id="duration-flex"
+                                    name="duration"
+                                    type="radio"
                                     value="I'm flexible"
                                 >
 
                                 <label for="duration-flex">
-                                    <span class="choice-indicator"></span>
-                                    I'm flexible
+                                    <span class="indicator"></span>
+                                    I'm easy
                                 </label>
                             </div>
 
@@ -1247,9 +1674,7 @@
                         <p
                             class="error"
                             id="duration-error"
-                        >
-                            Please choose one.
-                        </p>
+                        ></p>
 
                     </div>
 
@@ -1261,94 +1686,94 @@
                         id="activities-group"
                     >
 
-                        <span class="group-title">
-                            What would you enjoy?
+                        <span class="label">
+                            What should be part of it?
                             <span class="required">*</span>
                         </span>
 
                         <div class="choice-grid">
 
-                            <div class="choice">
+                            <div class="choice checkbox">
                                 <input
-                                    type="checkbox"
-                                    name="activities"
                                     id="coffee"
+                                    name="activities"
+                                    type="checkbox"
                                     value="Coffee or tea"
                                 >
 
                                 <label for="coffee">
-                                    <span class="choice-indicator"></span>
+                                    <span class="indicator"></span>
                                     Coffee or tea
                                 </label>
                             </div>
 
-                            <div class="choice">
+                            <div class="choice checkbox">
                                 <input
-                                    type="checkbox"
-                                    name="activities"
                                     id="dinner"
+                                    name="activities"
+                                    type="checkbox"
                                     value="Dinner"
                                 >
 
                                 <label for="dinner">
-                                    <span class="choice-indicator"></span>
+                                    <span class="indicator"></span>
                                     Dinner
                                 </label>
                             </div>
 
-                            <div class="choice">
+                            <div class="choice checkbox">
                                 <input
-                                    type="checkbox"
-                                    name="activities"
                                     id="juice"
+                                    name="activities"
+                                    type="checkbox"
                                     value="Juice and snacks"
                                 >
 
                                 <label for="juice">
-                                    <span class="choice-indicator"></span>
-                                    Juice and snacks
+                                    <span class="indicator"></span>
+                                    Drinks & snacks
                                 </label>
                             </div>
 
-                            <div class="choice">
+                            <div class="choice checkbox">
                                 <input
-                                    type="checkbox"
-                                    name="activities"
                                     id="sunset"
+                                    name="activities"
+                                    type="checkbox"
                                     value="Seaside or sunset"
                                 >
 
                                 <label for="sunset">
-                                    <span class="choice-indicator"></span>
-                                    Seaside or sunset
+                                    <span class="indicator"></span>
+                                    Seaside / sunset
                                 </label>
                             </div>
 
-                            <div class="choice">
+                            <div class="choice checkbox">
                                 <input
-                                    type="checkbox"
-                                    name="activities"
                                     id="walk"
+                                    name="activities"
+                                    type="checkbox"
                                     value="Evening walk"
                                 >
 
                                 <label for="walk">
-                                    <span class="choice-indicator"></span>
-                                    Evening walk
+                                    <span class="indicator"></span>
+                                    A little walk
                                 </label>
                             </div>
 
-                            <div class="choice">
+                            <div class="choice checkbox">
                                 <input
-                                    type="checkbox"
-                                    name="activities"
                                     id="talk"
+                                    name="activities"
+                                    type="checkbox"
                                     value="Sitting and talking"
                                 >
 
                                 <label for="talk">
-                                    <span class="choice-indicator"></span>
-                                    Sitting and talking
+                                    <span class="indicator"></span>
+                                    Just sit & talk
                                 </label>
                             </div>
 
@@ -1357,9 +1782,7 @@
                         <p
                             class="error"
                             id="activities-error"
-                        >
-                            Pick at least one.
-                        </p>
+                        ></p>
 
                     </div>
 
@@ -1369,16 +1792,16 @@
                     <div class="form-group">
 
                         <label
-                            class="group-title"
+                            class="label"
                             for="avoid"
                         >
-                            Anything you'd rather skip?
+                            Anything you'd rather avoid?
                         </label>
 
                         <textarea
                             id="avoid"
                             name="avoid"
-                            placeholder="Anything you don't enjoy..."
+                            placeholder="Anything I should know..."
                         ></textarea>
 
                     </div>
@@ -1389,25 +1812,25 @@
                     <div class="form-group">
 
                         <label
-                            class="group-title"
+                            class="label"
                             for="message"
                         >
-                            Anything else you want me to know?
+                            One more thing?
                         </label>
 
                         <textarea
                             id="message"
                             name="message"
-                            placeholder="Tell me anything..."
+                            placeholder="Anything you want to add..."
                         ></textarea>
 
                     </div>
 
 
                     <div class="note">
-                        No need to overthink this.
-                        Just choose what feels good to you.
-                        I'll handle the little details.
+                        Don't overthink it.
+                        Pick what sounds good and leave
+                        the rest to me.
                     </div>
 
 
@@ -1415,10 +1838,11 @@
 
                         <button
                             class="btn btn-primary"
-                            type="button"
                             id="submit-btn"
+                            type="button"
                         >
-                            Send my answers
+                            Send my choices
+                            <span>♥</span>
                         </button>
 
                     </div>
@@ -1437,67 +1861,64 @@
 
 
         <!-- =================================================
-             SCREEN 6 — SUCCESS
+             06 — SUCCESS
         ================================================= -->
 
         <section
             class="screen"
             id="screen-6"
-            aria-labelledby="success-title"
         >
 
-            <div class="card success-card">
+            <div class="panel center-panel">
 
                 <div class="content">
 
-                    <div class="heart-mark">
-                        ♥
+                    <div class="symbol">
+                        ✦
                     </div>
 
-                    <div class="eyebrow">
-                        It's official
+                    <div class="kicker">
+                        And we're set
                     </div>
 
-                    <h2 id="success-title">
+                    <h2>
                         Perfect.<br>
-                        <span class="italic">It's a plan.</span>
+                        <span class="accent">I'll take it from here.</span>
                     </h2>
 
                     <p class="lead">
-                        I've got everything I need.
-                        You tell me what you like,
-                        and I'll take care of the rest.
+                        I've got your answers.
+                        Now all that's left is making
+                        the evening happen.
                     </p>
 
-                    <p class="lead">
+                    <p class="micro">
                         See you soon.
-                    </p>
-
-                    <p class="small-message">
-                        And yes... I actually made all
-                        of this just for you.
                     </p>
 
                     <div class="actions">
 
                         <button
-                            class="btn btn-soft"
-                            type="button"
+                            class="btn btn-quiet"
                             id="ps-btn"
+                            type="button"
                         >
-                            Wait... there's one more thing
+                            One last thing
                         </button>
 
                     </div>
 
                     <div
-                        class="ps-box"
+                        class="ps"
                         id="ps-box"
                     >
-                        <strong>P.S.</strong>
+                        <strong>P.S.</strong><br><br>
+
+                        You probably expected a question.
                         You probably didn't expect a whole
-                        website for one question.
-                        Neither did I.
+                        website.
+
+                        I thought one deserved the other.
                     </div>
 
                 </div>
@@ -1508,50 +1929,49 @@
 
 
         <!-- =================================================
-             SCREEN 7 — DECLINE
+             07 — DECLINE
         ================================================= -->
 
         <section
             class="screen"
             id="screen-7"
-            aria-labelledby="decline-title"
         >
 
-            <div class="card decline-card">
+            <div class="panel center-panel">
 
                 <div class="content">
 
-                    <div class="heart-mark">
+                    <div class="symbol">
                         ♡
                     </div>
 
-                    <div class="eyebrow">
-                        No hard feelings
+                    <div class="kicker">
+                        No pressure
                     </div>
 
-                    <h2 id="decline-title">
-                        No worries.<br>
-                        <span class="italic">Really.</span>
+                    <h2>
+                        That's<br>
+                        <span class="accent">okay.</span>
                     </h2>
 
                     <p class="lead">
                         Thank you for being honest.
-                        I appreciate that more than
-                        a forced yes.
+                        I'd rather have a real answer
+                        than a yes you didn't mean.
                     </p>
 
-                    <p class="lead">
-                        Our friendship is still good.
+                    <p class="micro">
+                        Nothing awkward. Nothing changes.
                     </p>
 
                     <div class="actions">
 
                         <button
-                            class="btn btn-outline"
-                            type="button"
+                            class="btn btn-quiet"
                             id="restart-btn"
+                            type="button"
                         >
-                            Start again
+                            Back to the beginning
                         </button>
 
                     </div>
@@ -1562,6 +1982,11 @@
 
         </section>
 
+
+        <div class="footer">
+            Made intentionally.
+        </div>
+
     </main>
 
 </div>
@@ -1570,17 +1995,18 @@
 <script>
 
     /* =========================================================
-       SETTINGS
+       CONFIGURATION
     ========================================================= */
 
-    const WHATSAPP_NUMBER = "252615820767";
+    const WHATSAPP_NUMBER =
+        "252615820767";
 
     const GOOGLE_SCRIPT_URL =
         "https://script.google.com/macros/s/AKfycbyRsSsDjN7Fsc2dqpH9V-t3Kc_pmHthxHllneIIzNJ7wXGjBPvwmY7Gk58An5RSftWSNQ/exec";
 
 
     /* =========================================================
-       DATE LIMIT
+       ALLOWED DATES
     ========================================================= */
 
     const ALLOWED_DATES = [
@@ -1596,6 +2022,8 @@
 
     let noAttempts = 0;
 
+    let finalChoice = "";
+
 
     /* =========================================================
        ELEMENTS
@@ -1603,6 +2031,12 @@
 
     const screens =
         document.querySelectorAll(".screen");
+
+    const progressBar =
+        document.getElementById("progress-bar");
+
+    const stepCounter =
+        document.getElementById("step-counter");
 
     const startBtn =
         document.getElementById("start-btn");
@@ -1634,18 +2068,18 @@
     const restartBtn =
         document.getElementById("restart-btn");
 
-    const noMessage =
-        document.getElementById("no-message");
+    const noStatus =
+        document.getElementById("no-status");
 
-    const questionActions =
-        document.querySelector(".question-actions");
+    const noArena =
+        document.querySelector(".no-arena");
 
     const dateInput =
         document.getElementById("date");
 
 
     /* =========================================================
-       SCREEN NAVIGATION
+       SCREEN MANAGEMENT
     ========================================================= */
 
     function showScreen(number) {
@@ -1659,57 +2093,68 @@
                 `screen-${number}`
             );
 
-        if (target) {
-            target.classList.add("active");
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+        if (!target) {
+            return;
         }
+
+        target.classList.add("active");
+
+        progressBar.style.width =
+            `${(number / 7) * 100}%`;
+
+        stepCounter.textContent =
+            `${String(number).padStart(2, "0")} / 07`;
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }
 
 
     /* =========================================================
-       BUTTON NAVIGATION
+       NORMAL NAVIGATION
     ========================================================= */
 
     startBtn.addEventListener(
         "click",
-        () => {
-            showScreen(2);
-        }
+        () => showScreen(2)
     );
 
 
     questionBtn.addEventListener(
         "click",
-        () => {
-            showScreen(3);
-        }
+        () => showScreen(3)
     );
 
 
     yesBtn.addEventListener(
         "click",
         () => {
+
+            finalChoice = "YES";
+
             showScreen(4);
+
         }
     );
 
 
     planBtn.addEventListener(
         "click",
-        () => {
-            showScreen(5);
-        }
+        () => showScreen(5)
     );
 
 
     honestNoBtn.addEventListener(
         "click",
         () => {
+
+            finalChoice =
+                "HONEST NO";
+
             showScreen(7);
+
         }
     );
 
@@ -1720,45 +2165,169 @@
 
             noAttempts = 0;
 
-            noMessage.textContent = "";
+            finalChoice = "";
 
-            noBtn.textContent = "No";
-
-            noBtn.style.position = "";
-            noBtn.style.left = "";
-            noBtn.style.top = "";
-            noBtn.style.transform = "";
+            resetNoButton();
 
             showScreen(1);
+
         }
     );
 
 
     /* =========================================================
-       NO BUTTON
+       MOBILE NO BUTTON
+       
+       Important:
+       - The button never leaves the arena.
+       - Touch targets stay large.
+       - Movement is calculated from actual dimensions.
+       - It avoids the YES button.
+       - It has different escape behavior.
     ========================================================= */
 
-    function handleNoAttempt(event) {
+    function moveNoButton() {
 
         if (noAttempts >= 5) {
             return;
         }
 
+        const arenaRect =
+            noArena.getBoundingClientRect();
+
+        const buttonRect =
+            noBtn.getBoundingClientRect();
+
+        const padding = 14;
+
+        const buttonWidth =
+            buttonRect.width;
+
+        const buttonHeight =
+            buttonRect.height;
+
+        const maxLeft =
+            arenaRect.width -
+            buttonWidth -
+            padding;
+
+        const maxTop =
+            arenaRect.height -
+            buttonHeight -
+            padding;
+
+        let left;
+        let top;
+
+
+        /*
+         * Try several random positions until
+         * we get a good one.
+         */
+
+        for (let attempt = 0; attempt < 20; attempt++) {
+
+            left =
+                padding +
+                Math.random() *
+                Math.max(
+                    1,
+                    maxLeft - padding
+                );
+
+            top =
+                padding +
+                Math.random() *
+                Math.max(
+                    1,
+                    maxTop - padding
+                );
+
+
+            /*
+             * Keep the NO button away from
+             * the center where YES normally sits.
+             */
+
+            const centerX =
+                left +
+                buttonWidth / 2;
+
+            const centerY =
+                top +
+                buttonHeight / 2;
+
+            const arenaCenterX =
+                arenaRect.width / 2;
+
+            const arenaCenterY =
+                arenaRect.height / 2;
+
+            const distance =
+                Math.sqrt(
+                    Math.pow(
+                        centerX - arenaCenterX,
+                        2
+                    ) +
+                    Math.pow(
+                        centerY - arenaCenterY,
+                        2
+                    )
+                );
+
+            if (distance > 65) {
+                break;
+            }
+        }
+
+
+        noBtn.style.left =
+            `${left}px`;
+
+        noBtn.style.top =
+            `${top}px`;
+
+        noBtn.style.transform =
+            "translate(0, 0)";
+    }
+
+
+    function handleNoAttempt(event) {
+
+        /*
+         * Once it reaches five escapes,
+         * the button becomes a real NO button.
+         */
+
+        if (noAttempts >= 5) {
+            return;
+        }
+
+
         if (event) {
             event.preventDefault();
         }
 
+
         noAttempts++;
 
+
         const messages = [
-            "Nice try.",
-            "That button seems a little shy.",
-            "You really went for it?",
-            "Okay... I see what you're doing.",
-            "Alright. I'll stop running."
+
+            "Not so fast.",
+
+            "You almost had it.",
+
+            "I saw that.",
+
+            "You're persistent.",
+
+            "Okay. You win."
+
         ];
 
-        noMessage.textContent =
+
+        noStatus.textContent =
             messages[
                 Math.min(
                     noAttempts - 1,
@@ -1766,117 +2335,143 @@
                 )
             ];
 
+
         if (noAttempts >= 5) {
 
+            noBtn.classList.add(
+                "final"
+            );
+
             noBtn.textContent =
-                "No — I mean it";
+                "Okay, no";
 
-            noBtn.style.position =
-                "relative";
+            /*
+             * Put it back into a predictable,
+             * easy-to-tap position.
+             */
 
-            noBtn.style.left = "0";
-            noBtn.style.top = "0";
+            noBtn.style.left =
+                "50%";
+
+            noBtn.style.top =
+                "78%";
+
+            noBtn.style.transform =
+                "translate(-50%, -50%)";
+
+            noStatus.textContent =
+                "Alright. I won't make you chase it.";
 
             return;
         }
 
 
-        /* =============================================
-           MOVE BUTTON
-        ============================================= */
-
-        const container =
-            questionActions;
-
-        const containerRect =
-            container.getBoundingClientRect();
-
-        const buttonRect =
-            noBtn.getBoundingClientRect();
-
-        const padding = 10;
-
-        const maxX =
-            Math.max(
-                0,
-                containerRect.width -
-                buttonRect.width -
-                padding * 2
-            );
-
-        const maxY =
-            Math.max(
-                0,
-                containerRect.height -
-                buttonRect.height -
-                padding * 2
-            );
-
-        const randomX =
-            padding +
-            Math.random() * maxX;
-
-        const randomY =
-            padding +
-            Math.random() * maxY;
-
-        noBtn.style.position = "absolute";
-
-        noBtn.style.left =
-            `${randomX}px`;
-
-        noBtn.style.top =
-            `${randomY}px`;
+        moveNoButton();
     }
 
 
+    /*
+     * Pointer events are better for mobile
+     * than relying only on mouse events.
+     */
+
     noBtn.addEventListener(
         "pointerdown",
-        handleNoAttempt
+        (event) => {
+
+            if (
+                event.pointerType === "touch" ||
+                event.pointerType === "pen" ||
+                event.pointerType === "mouse"
+            ) {
+
+                handleNoAttempt(event);
+
+            }
+
+        }
     );
 
+
+    /*
+     * If the user actually reaches the final
+     * stationary NO button, record NO.
+     */
 
     noBtn.addEventListener(
         "click",
         () => {
 
             if (noAttempts >= 5) {
+
+                finalChoice =
+                    "NO";
+
                 showScreen(7);
+
             }
 
         }
     );
 
 
-    /* =========================================================
-       KEYBOARD SUPPORT
-    ========================================================= */
+    /*
+     * Keyboard support.
+     */
 
     noBtn.addEventListener(
         "keydown",
         (event) => {
 
             if (
-                event.key === "Enter" ||
-                event.key === " "
+                event.key !== "Enter" &&
+                event.key !== " "
             ) {
+                return;
+            }
 
-                event.preventDefault();
+            event.preventDefault();
 
-                if (noAttempts < 5) {
 
-                    handleNoAttempt(event);
+            if (noAttempts < 5) {
 
-                } else {
+                handleNoAttempt(event);
 
-                    showScreen(7);
+            } else {
 
-                }
+                finalChoice =
+                    "NO";
+
+                showScreen(7);
 
             }
 
         }
     );
+
+
+    function resetNoButton() {
+
+        noBtn.classList.remove(
+            "final"
+        );
+
+        noBtn.textContent =
+            "Not quite";
+
+        noBtn.style.left =
+            "50%";
+
+        noBtn.style.top =
+            "58%";
+
+        noBtn.style.transform =
+            "translate(-50%, -50%)";
+
+        noStatus.textContent =
+            "";
+
+    }
 
 
     /* =========================================================
@@ -1891,137 +2486,76 @@
 
 
     /* =========================================================
-       VALIDATION HELPERS
+       VALIDATION
     ========================================================= */
-
-    function showFieldError(
-        groupId,
-        errorId,
-        message
-    ) {
-
-        const group =
-            document.getElementById(groupId);
-
-        const error =
-            document.getElementById(errorId);
-
-        if (group) {
-            group.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
-        }
-
-        if (error) {
-            error.textContent = message;
-            error.classList.add("show");
-        }
-    }
-
 
     function clearErrors() {
 
         document
             .querySelectorAll(".error")
             .forEach((error) => {
-                error.classList.remove("show");
+
+                error.classList.remove(
+                    "show"
+                );
+
                 error.textContent = "";
+
             });
 
     }
 
 
-    /* =========================================================
-       FORM DATA
-    ========================================================= */
+    function showError(
+        errorId,
+        message
+    ) {
 
-    function collectFormData() {
-
-        const name =
-            document
-                .getElementById("name")
-                .value
-                .trim();
-
-        const date =
-            dateInput.value;
-
-        const startTime =
-            document.querySelector(
-                'input[name="startTime"]:checked'
-            )?.value || "";
-
-        const duration =
-            document.querySelector(
-                'input[name="duration"]:checked'
-            )?.value || "";
-
-        const activities =
-            Array.from(
-                document.querySelectorAll(
-                    'input[name="activities"]:checked'
-                )
-            ).map(
-                (input) => input.value
+        const error =
+            document.getElementById(
+                errorId
             );
 
-        const avoid =
-            document
-                .getElementById("avoid")
-                .value
-                .trim();
+        if (!error) {
+            return;
+        }
 
-        const message =
-            document
-                .getElementById("message")
-                .value
-                .trim();
+        error.textContent =
+            message;
 
-        return {
-            name,
-            date,
-            startTime,
-            duration,
-            activities,
-            avoid,
-            message
-        };
+        error.classList.add(
+            "show"
+        );
+
     }
 
-
-    /* =========================================================
-       VALIDATE FORM
-    ========================================================= */
 
     function validateForm(data) {
 
         clearErrors();
 
-        let isValid = true;
+        let valid = true;
 
 
         if (!data.name) {
 
-            showFieldError(
-                "name-group",
+            showError(
                 "name-error",
-                "Please enter your name."
+                "Tell me your name first."
             );
 
-            isValid = false;
+            valid = false;
         }
 
 
         if (!data.date) {
 
-            showFieldError(
-                "date-group",
+            showError(
                 "date-error",
-                "Please choose a date."
+                "Pick one of the three evenings."
             );
 
-            isValid = false;
+            valid = false;
 
         } else if (
             !ALLOWED_DATES.includes(
@@ -2029,37 +2563,34 @@
             )
         ) {
 
-            showFieldError(
-                "date-group",
+            showError(
                 "date-error",
                 "Please choose October 7, 8, or 9, 2026."
             );
 
-            isValid = false;
+            valid = false;
         }
 
 
         if (!data.startTime) {
 
-            showFieldError(
-                "time-group",
+            showError(
                 "time-error",
-                "Please choose a time."
+                "Choose a time that works for you."
             );
 
-            isValid = false;
+            valid = false;
         }
 
 
         if (!data.duration) {
 
-            showFieldError(
-                "duration-group",
+            showError(
                 "duration-error",
-                "Please choose one."
+                "Give me a rough idea of the timing."
             );
 
-            isValid = false;
+            valid = false;
         }
 
 
@@ -2067,25 +2598,80 @@
             data.activities.length === 0
         ) {
 
-            showFieldError(
-                "activities-group",
+            showError(
                 "activities-error",
-                "Pick at least one."
+                "Pick at least one thing you'd enjoy."
             );
 
-            isValid = false;
+            valid = false;
         }
 
 
-        return isValid;
+        return valid;
     }
 
 
     /* =========================================================
-       DATE FORMAT
+       COLLECT FORM
     ========================================================= */
 
-    function formatDate(dateString) {
+    function collectFormData() {
+
+        return {
+
+            name:
+                document
+                    .getElementById("name")
+                    .value
+                    .trim(),
+
+            date:
+                dateInput.value,
+
+            startTime:
+                document.querySelector(
+                    'input[name="startTime"]:checked'
+                )?.value || "",
+
+            duration:
+                document.querySelector(
+                    'input[name="duration"]:checked'
+                )?.value || "",
+
+            activities:
+                Array.from(
+                    document.querySelectorAll(
+                        'input[name="activities"]:checked'
+                    )
+                ).map(
+                    (input) =>
+                        input.value
+                ),
+
+            avoid:
+                document
+                    .getElementById("avoid")
+                    .value
+                    .trim(),
+
+            message:
+                document
+                    .getElementById("message")
+                    .value
+                    .trim()
+
+        };
+
+    }
+
+
+    /* =========================================================
+       DATE DISPLAY
+    ========================================================= */
+
+    function formatDate(
+        dateString
+    ) {
 
         const date =
             new Date(
@@ -2101,14 +2687,20 @@
                 year: "numeric"
             }
         );
+
     }
 
 
     /* =========================================================
-       PRIVATE CODE
+       PRIVATE REFERENCE CODE
+       
+       These codes don't expose the meaning
+       of the NO interaction to the recipient.
     ========================================================= */
 
-    function getPrivateCode(attempts) {
+    function getPrivateCode(
+        attempts
+    ) {
 
         const codes = {
 
@@ -2130,6 +2722,7 @@
             codes[attempts] ||
             `Z${attempts}-K7`
         );
+
     }
 
 
@@ -2137,7 +2730,9 @@
        WHATSAPP MESSAGE
     ========================================================= */
 
-    function buildWhatsAppMessage(data) {
+    function buildWhatsAppMessage(
+        data
+    ) {
 
         const activities =
             data.activities
@@ -2156,7 +2751,7 @@
 
         return `Hey ❤️
 
-I filled out the little date plan.
+Here's the plan.
 
 Name:
 ${data.name}
@@ -2164,39 +2759,44 @@ ${data.name}
 Date:
 ${formatDate(data.date)}
 
-Start time:
+Time:
 ${data.startTime}
 
 Duration:
 ${data.duration}
 
-What I'd enjoy:
+I'd enjoy:
 ${activities}
 
-Anything I'd rather avoid:
+I'd rather avoid:
 ${data.avoid || "Nothing specific"}
 
-Anything else:
+One more thing:
 ${data.message || "Nothing else"}
 
 Ref:
 ${privateCode}
 
-Looking forward to it. ❤️`;
+See you soon. ❤️`;
+
     }
 
 
     /* =========================================================
-       SAVE TO GOOGLE SHEETS
+       GOOGLE SHEETS
     ========================================================= */
 
-    function saveToGoogleSheet(data) {
+    function saveToGoogleSheet(
+        data
+    ) {
 
         const payload = {
 
-            name: data.name,
+            name:
+                data.name,
 
-            date: data.date,
+            date:
+                data.date,
 
             startTime:
                 data.startTime,
@@ -2225,6 +2825,7 @@ Looking forward to it. ❤️`;
         fetch(
             GOOGLE_SCRIPT_URL,
             {
+
                 method: "POST",
 
                 mode: "no-cors",
@@ -2242,7 +2843,9 @@ Looking forward to it. ❤️`;
                 keepalive: true
 
             }
-        ).catch(() => {});
+        ).catch(
+            () => {}
+        );
 
     }
 
@@ -2270,11 +2873,11 @@ Looking forward to it. ❤️`;
                 true;
 
             submitBtn.textContent =
-                "Saving your answers...";
+                "Putting it together...";
 
 
             /*
-             * Save to Google Sheets
+             * Google Sheets
              */
 
             saveToGoogleSheet(
@@ -2283,7 +2886,7 @@ Looking forward to it. ❤️`;
 
 
             /*
-             * Build WhatsApp message
+             * WhatsApp
              */
 
             const message =
@@ -2297,15 +2900,14 @@ Looking forward to it. ❤️`;
 
 
             /*
-             * Show success screen first
+             * Show final screen first.
              */
 
             showScreen(6);
 
 
             /*
-             * Give the browser a moment
-             * before opening WhatsApp.
+             * Then open WhatsApp.
              */
 
             setTimeout(
@@ -2315,25 +2917,7 @@ Looking forward to it. ❤️`;
                         whatsappURL;
 
                 },
-                700
-            );
-
-
-            /*
-             * Reset button state
-             */
-
-            setTimeout(
-                () => {
-
-                    submitBtn.disabled =
-                        false;
-
-                    submitBtn.textContent =
-                        "Send my answers";
-
-                },
-                1500
+                750
             );
 
         }
@@ -2348,29 +2932,26 @@ Looking forward to it. ❤️`;
         "click",
         () => {
 
-            psBox.classList.toggle(
-                "show"
-            );
-
-
-            if (
-                psBox.classList.contains(
+            const visible =
+                psBox.classList.toggle(
                     "show"
-                )
-            ) {
+                );
 
-                psBtn.textContent =
-                    "Okay, that's everything";
 
-            } else {
-
-                psBtn.textContent =
-                    "Wait... there's one more thing";
-
-            }
+            psBtn.textContent =
+                visible
+                    ? "Okay, that's enough secrets"
+                    : "One last thing";
 
         }
     );
+
+
+    /* =========================================================
+       INITIAL STATE
+    ========================================================= */
+
+    showScreen(1);
 
 </script>
 
